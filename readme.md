@@ -1,5 +1,5 @@
 # nRF5 SDK CMake
-Entropic Engineering's CMake build scripts for the nRF5 SDK.
+Entropic Engineering's CMake build scripts for the Nordic nRF5 SDK.
 
 # Installation Instructions
 
