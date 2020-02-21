@@ -3,10 +3,12 @@ Entropic Engineering's CMake build scripts for the Nordic nRF5 SDK.
 
 Some helper functionality we've found helpful:
 
-By default, CMAKE_BUILD_TYPE is set to `Debug` (in `biolerplate.cmake`).
+* These scritps will automatically locate `arm-none-eabi-gcc` if it is on your path.
+
+* By default, CMAKE_BUILD_TYPE is set to `Debug` (in `biolerplate.cmake`).
 Additionally, when the build type is `Debug`, a `DEBUG` macro is defined (as `1`).
 
-The `pca10056_sdk_functions.cmake` file adds compile flags for the associated board.
+* The `pca10056_sdk_functions.cmake` file adds compile flags for the associated board.
 It also adds convenience make targets `make sdk_config`, which launches the CMSIS Config Wizard,
 and `make flash`, which will flash the Nordic dev board, or anything attached to it.
 
