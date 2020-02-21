@@ -1,7 +1,7 @@
 # pragma once
 include_guard(GLOBAL)
 
-cmake_minimum_required(VERSION 3.6...3.15)
+cmake_minimum_required(VERSION 3.6...3.16)
 if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
@@ -41,7 +41,7 @@ if(NOT EXISTS "${SDK_ROOT}")
 endif()
 
 if(NOT EXISTS "${SDK_ROOT}")
-    message(SEND_ERROR "Set SDK_ROOT or symlink/copy SDK directory to root of repo")
+    message(SEND_ERROR "Set SDK_ROOT or symlink/copy SDK directory into 'external' directory in root of repo")
 endif()
 
 # On macOS, have cmake look for unix libraries first

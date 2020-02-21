@@ -1,6 +1,15 @@
 # nRF5 SDK CMake
 Entropic Engineering's CMake build scripts for the Nordic nRF5 SDK.
 
+Some helper functionality we've found helpful:
+
+By default, CMAKE_BUILD_TYPE is set to `Debug` (in `biolerplate.cmake`).
+Additionally, when the build type is `Debug`, a `DEBUG` macro is defined (as `1`).
+
+The `pca10056_sdk_functions.cmake` file adds compile flags for the associated board.
+It also adds convenience make targets `make sdk_config`, which launches the CMSIS Config Wizard,
+and `make flash`, which will flash the Nordic dev board, or anything attached to it.
+
 # Installation Instructions
 
 ## As a fork
@@ -81,7 +90,8 @@ Set version requirements, then add required boilerplate, then define project:
 cmake_minimum_required(VERSION 3.15)
 
 # Tell CMake where to look for includes
-#set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/external/toyOS/cmake)
+# Select one of:
+#set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/external/nRF5_CMake/cmake)
 # OR
 #set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 include(boilerplate NO_POLICY_SCOPE)
