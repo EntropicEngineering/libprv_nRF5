@@ -1,0 +1,23 @@
+//
+// Created by Benjamin Riggs on 12/6/19.
+//
+
+#include "nrf_gpio.h"
+
+#ifndef SPI_UART_APP_CONFIG_H
+#define SPI_UART_APP_CONFIG_H
+
+#define CDC_ACM_COMM_INTERFACE  0
+#define CDC_ACM_COMM_EPIN       NRF_DRV_USBD_EPIN2
+
+#define CDC_ACM_DATA_INTERFACE  1
+#define CDC_ACM_DATA_EPIN       NRF_DRV_USBD_EPIN1
+#define CDC_ACM_DATA_EPOUT      NRF_DRV_USBD_EPOUT1
+
+#define SPI_ID 3
+#define SPI_3_SCK_PIN NRF_GPIO_PIN_MAP(1, 15)
+#define SPI_3_MISO_PIN NRF_GPIO_PIN_MAP(1, 14)
+#define SPI_3_MOSI_PIN NRF_GPIO_PIN_MAP(1, 13)
+#define SPI_3_SS_PIN NRF_GPIO_PIN_MAP(1, 12)
+
+#endif //SPI_UART_APP_CONFIG_H
