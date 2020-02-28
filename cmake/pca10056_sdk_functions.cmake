@@ -1,27 +1,18 @@
 # pragma once
 include_guard(GLOBAL)
 
-macro(check target)
-    if(NOT TARGET "${target}")
-        message(SEND_ERROR "sdk helper functions must be called with existing target")
-        return()
-    endif()
-endmacro()
-
-function(pca10056_sdk_target_compile_definitions target)
-    check("${target}")
-
-    target_compile_definitions(${target} PUBLIC
+macro(pca10056_sdk_target_compile_definitions)
+    add_compile_definitions(
             BOARD_PCA10056
             NRF52840_XXAA
-            __HEAP_SIZE=8192
-            __STACK_SIZE=8192
             )
-
-endfunction()
+endmacro()
 
 function(pca10056_generate_convenience_functions target)
-    check("${target}")
+    if (NOT TARGET "${target}")
+        message(SEND_ERROR "sdk helper functions must be called with existing target")
+        return()
+    endif ()
 
     get_target_property(name "${target}" NAME)
     get_target_property(ext "${target}" SUFFIX)
@@ -35,6 +26,13 @@ function(pca10056_generate_convenience_functions target)
             COMMAND nrfjprog -f nrf52 --program "${name}.hex" --sectorerase --verify --fast --reset
             )
     message("'make flash' will flash ${name}.hex onto a connected board")
+
+    if (DEFINED SOFTDEVICE)
+        add_custom_target(flash_${SOFTDEVICE}
+                COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_7.0.1_softdevice.hex" --sectorerase --verify --fast --reset
+                )
+        message("'make flash_${SOFTDEVICE}' will flash the ${SOFTDEVICE} SoftDevice onto a connected board")
+    endif ()
 
     add_custom_command(TARGET "${name}" POST_BUILD
             COMMAND "${CMAKE_OBJCOPY}" -O binary "${name}${ext}" "${name}.bin"
