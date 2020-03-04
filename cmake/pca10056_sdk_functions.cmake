@@ -1,7 +1,7 @@
 # pragma once
 include_guard(GLOBAL)
 
-macro(pca10056_sdk_target_compile_definitions)
+macro(pca10056_sdk_compile_definitions)
     add_compile_definitions(
             BOARD_PCA10056
             NRF52840_XXAA
