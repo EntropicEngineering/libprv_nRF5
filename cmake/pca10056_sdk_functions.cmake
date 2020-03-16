@@ -27,6 +27,11 @@ function(pca10056_generate_convenience_functions target)
             )
     message("'make flash' will flash ${name}.hex onto a connected board")
 
+    add_custom_target(erase
+            COMMAND nrfjprog -f nrf52 --recover
+            )
+    message("'make erase' will completely erase a connected board. This is required before programming a module for the first time.")
+
     if (DEFINED SOFTDEVICE)
         add_custom_target(flash_${SOFTDEVICE}
                 COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_7.0.1_softdevice.hex" --sectorerase --verify --fast --reset
