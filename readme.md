@@ -3,7 +3,7 @@ Entropic Engineering's CMake build scripts for the Nordic nRF5 SDK.
 
 Some helper functionality we've found helpful:
 
-* These scritps will automatically locate `arm-none-eabi-gcc` if it is on your path.
+* These scripts will automatically locate `arm-none-eabi-gcc` if it is on your path.
 
 * By default, CMAKE_BUILD_TYPE is set to `Debug` (in `biolerplate.cmake`).
 Additionally, when the build type is `Debug`, a `DEBUG` macro is defined (as `1`).
