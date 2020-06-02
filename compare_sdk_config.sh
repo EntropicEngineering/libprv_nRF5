@@ -10,7 +10,7 @@ fi
 PROJECT_CONFIG=$1
 
 compare() {
-    local IFS=$'\n\r'
+    local IFS=$'\n'
     for EXAMPLE_OPTION in $( grep "#define" "$1" )
     do
         OPTION_NAME=$(printf "${EXAMPLE_OPTION}" | cut -d' ' -f2)
@@ -18,7 +18,7 @@ compare() {
         if [[ -z ${PROJECT_OPTION} ]]
         then
             printf "Unset: ${OPTION_NAME}\n"
-        elif [[ "${EXAMPLE_OPTION}" != "${PROJECT_OPTION}" ]]
+        elif [[ "${EXAMPLE_OPTION//$'\r'/}" != "${PROJECT_OPTION//$'\r'/}" ]]
         then
             printf "Settings differ: ${OPTION_NAME}\n"
         fi
