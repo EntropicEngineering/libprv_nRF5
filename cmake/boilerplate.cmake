@@ -72,12 +72,14 @@ link_libraries(
 )
 
 macro(set_softdevice softdevice)
+    # FIXME: Brittle
     if (EXISTS "${SDK_ROOT}/components/softdevice/${softdevice}/hex/${softdevice}_nrf52_7.0.1_softdevice.hex")
         string(TOUPPER ${softdevice} SOFTDEVICE_FLAG)
         add_compile_definitions(
                 SOFTDEVICE_PRESENT
                 NRF_SD_BLE_API_VERSION=7
                 ${SOFTDEVICE_FLAG}
+                NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED=0
         )
         set(SOFTDEVICE ${softdevice})
     else()
