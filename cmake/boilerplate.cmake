@@ -41,7 +41,7 @@ if (NOT EXISTS "${SDK_ROOT}")
 endif ()
 
 if(NOT EXISTS "${SDK_ROOT}")
-    message(SEND_ERROR "Set SDK_ROOT or symlink/copy SDK directory into 'external' directory in root of repo")
+    message(FATAL_ERROR "Set SDK_ROOT or symlink/copy SDK directory into 'external' directory in root of repo")
 endif()
 
 # On macOS, have cmake look for unix libraries first
@@ -83,7 +83,7 @@ macro(set_softdevice softdevice)
         )
         set(SOFTDEVICE ${softdevice})
     else()
-        message(SEND_ERROR "Invalid softdevice: ${softdevice}")
+        message(FATAL_ERROR "Invalid softdevice: ${softdevice}")
     endif ()
 endmacro()
 
