@@ -32,6 +32,11 @@ function(pca10056_generate_convenience_functions target)
             )
     message("'make erase' will completely erase a connected board. This is required before programming a module for the first time.")
 
+    add_custom_target(flash_blinky
+            COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/examples/peripheral/blinky/hex/blinky_pca10056.hex" --sectorerase --verify --fast --reset
+            )
+    message("'make flash_blink' will reflash the nRF52DK LED blinky app.")
+
     if (DEFINED SOFTDEVICE)
         add_custom_target(flash_${SOFTDEVICE}
                 COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_7.0.1_softdevice.hex" --sectorerase --verify --fast --reset
