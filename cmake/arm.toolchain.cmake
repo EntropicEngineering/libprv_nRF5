@@ -4,14 +4,14 @@ set(CMAKE_SYSTEM_PROCESSOR ARM)
 
 set(ext "${CMAKE_EXECUTABLE_SUFFIX}")
 
+unset(CMAKE_C_COMPILER)
+
 # Try to find arm gcc from env
-if(NOT EXISTS "${CMAKE_C_COMPILER}")
-    set(ARM_TOOLCHAIN_PATH "$ENV{GNUARMEMB_TOOLCHAIN_PATH}" CACHE PATH "arm-none-eabi-<version> install location")
-    if(EXISTS "${ARM_TOOLCHAIN_PATH}")
-        get_filename_component(CMAKE_C_COMPILER "${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN}-gcc${ext}" REALPATH)
-        get_filename_component(ARM_TOOLCHAIN_BIN "${CMAKE_C_COMPILER}" DIRECTORY CACHE)
-    endif()
-endif()
+set(ARM_TOOLCHAIN_PATH "$ENV{GNUARMEMB_TOOLCHAIN_PATH}" CACHE PATH "arm-none-eabi-<version> install location")
+if (EXISTS "${ARM_TOOLCHAIN_PATH}")
+    get_filename_component(CMAKE_C_COMPILER "${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN}-gcc${ext}" REALPATH)
+    get_filename_component(ARM_TOOLCHAIN_BIN "${CMAKE_C_COMPILER}" DIRECTORY CACHE)
+endif ()
 
 # Try to find arm gcc in path
 if(NOT EXISTS "${CMAKE_C_COMPILER}")
@@ -63,7 +63,7 @@ macro(set_flags var)
 endmacro()
 
 set_flags(CMAKE_C_FLAGS_INIT ${ARM_COMPILER_FLAGS} ${ARM_OPTIMIZATION_FLAGS})
-set_flags(CMAKE_C_FLAGS_DEBUG_INIT -Og)
+set_flags(CMAKE_C_FLAGS_DEBUG_INIT -ggdb)
 
 set(CMAKE_CXX_FLAGS_INIT ${CMAKE_C_FLAGS_INIT})
 set(CMAKE_ASM_FLAGS_INIT ${CMAKE_C_FLAGS_INIT})
