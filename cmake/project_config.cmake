@@ -42,7 +42,7 @@ if(${SOFTDEVICE})
     endif()
 endif()
 
-if({ENABLE_SPIM3})
+if(${ENABLE_SPIM3})
     add_compile_definitions(
             NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED=0
     )
