@@ -28,13 +28,15 @@ link_libraries(
         m
 )
 
-if(${SOFTDEVICE})
-    # FIXME: Brittle
-    if (EXISTS "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_7.0.1_softdevice.hex")
+if(SOFTDEVICE)
+    file (GLOB SD_PATH "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_*_softdevice.hex")
+    if (EXISTS "${SD_PATH}")
+        get_filename_component(SD_FILENAME "${SD_PATH}" NAME_WE)
+        string(SUBSTRING "${SD_FILENAME}" 11 1 SD_MAJOR_VERSION)
         string(TOUPPER ${SOFTDEVICE} SOFTDEVICE_FLAG)
         add_compile_definitions(
                 SOFTDEVICE_PRESENT
-                NRF_SD_BLE_API_VERSION=7
+                NRF_SD_BLE_API_VERSION=${SD_MAJOR_VERSION}
                 ${SOFTDEVICE_FLAG}
         )
     else()
@@ -42,17 +44,17 @@ if(${SOFTDEVICE})
     endif()
 endif()
 
-if(${ENABLE_SPIM3})
+if(ENABLE_SPIM3)
     add_compile_definitions(
             NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED=0
     )
 endif()
 
-if(${HEAP_SIZE})
+if(HEAP_SIZE)
     add_compile_definitions(__HEAP_SIZE=0x200)
 endif()
 
-if(${STACK_SIZE})
+if(STACK_SIZE)
     add_compile_definitions(__STACK_SIZE=0x4000)
 endif()
 

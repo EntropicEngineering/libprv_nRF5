@@ -98,6 +98,20 @@
 #define NRF_PWR_MGMT_CONFIG_CPU_USAGE_MONITOR_ENABLED 1
 #endif
 
+/// Flash Device Storage library
+#define FDS_ENABLED 1
+#ifdef SOFTDEVICE_PRESENT
+#define FDS_BACKEND NRF_FSTORAGE_SD
+#else
+#define FDS_BACKEND NRF_FSTORAGE_NVMC
+#endif
+// Size of FDS: FDS_VIRTUAL_PAGES * 4096 bytes
+#define FDS_VIRTUAL_PAGES 16
+#define CRC16_ENABLED 1
+#define FDS_CRC_CHECK_ON_READ 1
+#define FDS_CRC_CHECK_ON_WRITE 1
+
+
 /**
  * Softdevice Config
  */
@@ -135,15 +149,6 @@
 // Softdevice BLE config
 #define BLE_ADVERTISING_ENABLED 1
 #define BLE_NUS_ENABLED 1
-
-// Flash Device Storage library
-#define FDS_ENABLED 1
-// Size of FDS: FDS_VIRTUAL_PAGES * 4096 bytes
-#define FDS_VIRTUAL_PAGES 16
-#define FDS_BACKEND 2
-#define CRC16_ENABLED 1
-#define FDS_CRC_CHECK_ON_READ 1
-#define FDS_CRC_CHECK_ON_WRITE 1
 
 #endif  // SOFTDEVICE_PRESENT
 

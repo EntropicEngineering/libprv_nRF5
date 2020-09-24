@@ -1,7 +1,7 @@
 # pragma once
 include_guard(GLOBAL)
 
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
+if(CMAKE_VERSION VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif ()
 
@@ -31,17 +31,19 @@ set(CMAKE_CXX_STANDARD 11)
 
 # Find nRF5 SDK
 if (NOT EXISTS "${SDK_ROOT}")
-    file(GLOB _SDK_ROOT
+    file(GLOB _SDK_ROOT CONFIGURE_DEPENDS
             "${CMAKE_SOURCE_DIR}/external/nRF5_SDK*"
             "${CMAKE_SOURCE_DIR}/external/nRF5SDK*"
             )
     if (EXISTS "${_SDK_ROOT}")
-        get_filename_component(SDK_ROOT "${_SDK_ROOT}" REALPATH CACHE)
+        get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
     endif ()
 endif ()
 
 if(NOT EXISTS "${SDK_ROOT}")
     message(FATAL_ERROR "Set SDK_ROOT or symlink/copy SDK directory into 'external' directory in root of repo")
+else()
+    message(STATUS "Found SDK root directory ${SDK_ROOT}")
 endif()
 
 set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_MODULE_PATH}/arm.toolchain.cmake")
