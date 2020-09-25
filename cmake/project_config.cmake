@@ -107,6 +107,9 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/fds/fds.c"
         "${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage.c"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage_sd.c>"
+        "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage_nvmc.c>"
+        "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage_nvmc.c>"
+        "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/modules/nrfx/hal/nrf_nvmc.c>"
         "${SDK_ROOT}/components/libraries/gfx/nrf_gfx.c"
         "${SDK_ROOT}/components/libraries/memobj/nrf_memobj.c"
         "${SDK_ROOT}/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c"
@@ -160,6 +163,8 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh_ble.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh_soc.c>"
+        "${LIB_ROOT}/src/prv_temperature.c"
+        "${LIB_ROOT}/src/prv_timers.c"
         "${SDK_ROOT}/modules/nrfx/mdk/system_nrf52840.c"
         )
 target_link_directories(${PROJECT_NAME} BEFORE PUBLIC

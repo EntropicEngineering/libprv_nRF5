@@ -6,7 +6,7 @@
 #define LIBPRV_CONFIG_H
 
 #ifndef ENABLE_USB_SERIAL
-#define ENABLE_USB_SERIAL 1
+#define ENABLE_USB_SERIAL 0
 #endif
 
 /**
