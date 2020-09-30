@@ -62,7 +62,7 @@ if(DEFINED ENABLE_USB_SERIAL)
     add_compile_definitions(ENABLE_USB_SERIAL=${ENABLE_USB_SERIAL})
 endif()
 
-get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." REALPATH CACHE)
+get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
 message("LIB_ROOT is ${LIB_ROOT}")
 
 target_sources("${PROJECT_NAME}" PRIVATE
