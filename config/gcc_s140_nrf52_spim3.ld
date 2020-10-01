@@ -9,14 +9,14 @@ MEMORY
 /* Because of SPIM3 anomoly, SoftDevice RAM size must be multiple of 8K of at most 56K */
   SOFTDEVICE_RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0xE000
   /* SPIM3 needs a dedicated physical RAM block that won't be touched by the CPU during DMA. */
-  SPIM3_READ_RAM (rwx) : ORIGIN = 0x2000E000, LENGTH = 0x1000
-  SPIM3_WRITE_RAM (rwx) : ORIGIN = 0x2000F000, LENGTH = 0x1000
+  SPIM3_RX_RAM (rwx) : ORIGIN = 0x2000E000, LENGTH = 0x1000
+  SPIM3_TX_RAM (rwx) : ORIGIN = 0x2000F000, LENGTH = 0x1000
   /* Application RAM size is 256K - SoftDevice RAM - 8K */
   RAM (rwx) :  ORIGIN = 0x20010000, LENGTH = 0x30000
 }
 
-_spim3_read_addr = ORIGIN(SPIM3_READ_RAM);
-_spim3_write_addr = ORIGIN(SPIM3_WRITE_RAM);
+_spim3_rx_addr = ORIGIN(SPIM3_RX_RAM);
+_spim3_tx_addr = ORIGIN(SPIM3_TX_RAM);
 
 SECTIONS
 {
