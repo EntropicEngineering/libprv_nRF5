@@ -165,6 +165,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh_soc.c>"
         "${LIB_ROOT}/src/prv_temperature.c"
         "${LIB_ROOT}/src/prv_timers.c"
+        "${LIB_ROOT}/src/crc8.c"
         "${SDK_ROOT}/modules/nrfx/mdk/system_nrf52840.c"
         )
 target_link_directories(${PROJECT_NAME} BEFORE PUBLIC
