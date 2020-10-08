@@ -51,11 +51,11 @@ if(ENABLE_SPIM3)
 endif()
 
 if(HEAP_SIZE)
-    add_compile_definitions(__HEAP_SIZE=0x200)
+    add_compile_definitions(__HEAP_SIZE=${HEAP_SIZE})
 endif()
 
 if(STACK_SIZE)
-    add_compile_definitions(__STACK_SIZE=0x4000)
+    add_compile_definitions(__STACK_SIZE=${STACK_SIZE})
 endif()
 
 if(DEFINED ENABLE_USB_SERIAL)
