@@ -13,6 +13,8 @@ add_compile_definitions(
         APP_TIMER_V2_RTC1_ENABLED
         CONFIG_GPIO_AS_PINRESET
         FLOAT_ABI_HARD
+        NRF_DFU_SVCI_ENABLED
+        $<$<BOOL:${SOFTDEVICE}>:NRF_DFU_TRANSPORT_BLE=1>
         MBEDTLS_CONFIG_FILE="nrf_crypto_mbedtls_config.h"
         NRF_CRYPTO_MAX_INSTANCE_COUNT=1
         uECC_ENABLE_VLI_API=0
@@ -140,18 +142,18 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_uart.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_uarte.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_usbd.c"
-        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/auth_status_tracker.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_advdata.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/ble_advertising/ble_advertising.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_conn_params.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_conn_state.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_srv_common.c>"
-        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/gatt_cache_manager.c>"
-        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/gatts_cache_manager.c>"
-        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/id_manager.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/nrf_ble_gatt/nrf_ble_gatt.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/nrf_ble_qwr/nrf_ble_qwr.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/ble_link_ctx_manager/ble_link_ctx_manager.c>"
+        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/auth_status_tracker.c>"
+        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/gatt_cache_manager.c>"
+        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/gatts_cache_manager.c>"
+        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/id_manager.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/peer_data_storage.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/peer_database.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/peer_manager/peer_id.c>"
@@ -199,6 +201,7 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
 #        "${SDK_ROOT}/components/libraries/cli"
         "${SDK_ROOT}/modules/nrfx/mdk"
         "${SDK_ROOT}/components/libraries/bootloader"
+        "${SDK_ROOT}/components/libraries/bootloader/dfu"
         "${SDK_ROOT}/components/libraries/scheduler"
         "${SDK_ROOT}/components/libraries/queue"
         "${SDK_ROOT}/components/libraries/pwr_mgmt"
@@ -236,7 +239,7 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/delay"
         "${SDK_ROOT}/components/libraries/atomic_fifo"
         "${SDK_ROOT}/components/libraries/atomic_flags"
-        "${SDK_ROOT}/components/drivers_nrf/nrf_soc_nosd"
+        "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/components/drivers_nrf/nrf_soc_nosd/>"
         "${SDK_ROOT}/components/libraries/atomic"
         "${SDK_ROOT}/components/boards"
         "${SDK_ROOT}/components/libraries/memobj"
