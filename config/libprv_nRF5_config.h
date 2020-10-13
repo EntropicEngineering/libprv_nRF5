@@ -117,7 +117,10 @@
  */
 #ifdef SOFTDEVICE_PRESENT
 
+// Enable Device Firmware Updates (DFU) via BLE
 #define BLE_DFU_ENABLED 1
+// Require BLE bonding for DFU
+#define NRF_DFU_BLE_BUTTONLESS_SUPPORTS_BONDS 1
 // Softdevice handler config
 // https://infocenter.nordicsemi.com/topic/sdk_nrf5_v16.0.0/group__nrf__sdh__config.html
 #define NRF_SDH_ENABLED 1
