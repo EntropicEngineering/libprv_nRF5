@@ -254,6 +254,6 @@ target_compile_options("${PROJECT_NAME}" PRIVATE -Wall $<$<CONFIG:Debug>:-ggdb>)
 
 # Add linker script
 target_link_options("${PROJECT_NAME}" PRIVATE
-        "$<IF:$<BOOL:${SOFTDEVICE}>,-T${LIB_ROOT}/config/gcc_${SOFTDEVICE}_nrf52$<$<BOOL:${ENABLE_SPIM3}>:_spim3>.ld,-T${LIB_ROOT}/config/gcc_nrf52$<$<BOOL:${ENABLE_SPIM3}>:_spim3>.ld>"
+        "-T${LIB_ROOT}/config/gcc$<$<BOOL:${SOFTDEVICE}>:_${SOFTDEVICE}>_nrf52$<$<BOOL:${ENABLE_SPIM3}>:_spim3>$<$<CONFIG:Debug>:_debug>.ld"
         "-Wl,-Map=${PROJECT_NAME}.map"
         )
