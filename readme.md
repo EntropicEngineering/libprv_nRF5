@@ -1,3 +1,5 @@
+# OUT OF DATE. ASK BEN.
+
 # nRF5 SDK CMake
 Entropic Engineering's CMake build scripts for the Nordic nRF5 SDK.
 
