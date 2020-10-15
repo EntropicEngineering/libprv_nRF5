@@ -33,9 +33,9 @@ add_custom_target(flash_blink_canary
         )
 message("'make flash_blink' will reflash the nRF52DK LED blinky app.")
 
-if (${SOFTDEVICE})
+if (SOFTDEVICE)
     add_custom_target(flash_${SOFTDEVICE}
-            COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_7.0.1_softdevice.hex" --sectorerase --verify --fast --reset
+            COMMAND nrfjprog -f nrf52 --program "${SD_PATH}" --sectorerase --verify --fast --reset
             )
     message("'make flash_${SOFTDEVICE}' will flash the ${SOFTDEVICE} SoftDevice onto a connected board")
 endif ()
