@@ -10,13 +10,13 @@ MEMORY
   /* Application RAM size is 256K - SoftDevice RAM */
   RAM (rwx) :  ORIGIN = 0x20010000, LENGTH = 0x2EF78
   /* Put RTT data at top of RAM. */
-  /* RTT_RAM LENGTH = 24 + SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS * 24
-                         + SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS * 24
-                         + SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
-                         + SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN */
-  /* With sdk_config defaults LENGTH = 120 + 4096 + 16 */
-  /* RTT_RAM ORIGIN = 0x20040000 - LENGTH */
-  RTT_RAM (rwx) : ORIGIN = 0x2003ef78, LENGTH = 0x1088
+  /* RTT_CB LENGTH = 24 + SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS * 24
+                        + SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS * 24 */
+  RTT_CB (rw) : ORIGIN = 0x2003ff88, LENGTH = 0x78
+  /* RTT_BUFFERS LENGTH = + SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
+                          + SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN */
+  /* RTT_BUFFERS ORIGIN = 0x20040000 - CB LENGTH - BUFFERS LENGTH */
+  RTT_BUFFERS (rw) : ORIGIN = 0x2003ef78, LENGTH = 0x1010
 }
 
 SECTIONS
@@ -24,11 +24,11 @@ SECTIONS
   .rtt_buffers :
   {
     KEEP(*(.rtt_buffers))
-  } > RTT_RAM
+  } > RTT_BUFFERS
   .rtt_cb :
   {
     KEEP(*(.rtt_cb))
-  } > RTT_RAM
+  } > RTT_CB
 }
 
 SECTIONS
