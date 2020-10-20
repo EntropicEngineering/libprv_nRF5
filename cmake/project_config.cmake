@@ -180,8 +180,6 @@ target_link_directories(${PROJECT_NAME} BEFORE PUBLIC
 target_include_directories("${PROJECT_NAME}" PRIVATE
         "${LIB_ROOT}/config"
         "${LIB_ROOT}/src"
-        "${CMAKE_SOURCE_DIR}/config"
-        "${CMAKE_SOURCE_DIR}/include"
         "${SDK_ROOT}/components"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/s140/headers>"

@@ -42,7 +42,7 @@ set(ARM_COMPILER_FLAGS
         )
 
 set(ARM_OPTIMIZATION_FLAGS
-        -flto
+        -fno-common
         -ffunction-sections
         -fdata-sections
         -fno-strict-aliasing
@@ -51,9 +51,9 @@ set(ARM_OPTIMIZATION_FLAGS
         )
 
 set(ARM_LINKER_FLAGS
-        -Wl,-flto
         -Wl,--gc-sections
         --specs=nano.specs
+        --specs=nosys.specs
         )
 
 
@@ -64,6 +64,7 @@ endmacro()
 
 set_flags(CMAKE_C_FLAGS_INIT ${ARM_COMPILER_FLAGS} ${ARM_OPTIMIZATION_FLAGS})
 set_flags(CMAKE_C_FLAGS_DEBUG_INIT -ggdb)
+set_flags(CMAKE_C_FLAGS_RELEASE_INIT -Os)
 
 set(CMAKE_CXX_FLAGS_INIT ${CMAKE_C_FLAGS_INIT})
 set(CMAKE_ASM_FLAGS_INIT ${CMAKE_C_FLAGS_INIT})
