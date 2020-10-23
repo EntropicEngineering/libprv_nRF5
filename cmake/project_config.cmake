@@ -7,7 +7,7 @@ set(CMAKE_FIND_FRAMEWORK LAST)
 set(CMAKE_FIND_APPBUNDLE LAST)
 
 # Precompiler definitions
-add_compile_definitions(
+target_compile_definitions("${PROJECT_NAME}" PRIVATE
         USE_APP_CONFIG
         APP_TIMER_V2
         APP_TIMER_V2_RTC1_ENABLED
@@ -24,7 +24,7 @@ add_compile_definitions(
         uECC_VLI_NATIVE_LITTLE_ENDIAN=1
 )
 
-link_libraries(
+target_link_libraries("${PROJECT_NAME}"
         c
         nosys
         m
@@ -36,7 +36,7 @@ if(SOFTDEVICE)
         get_filename_component(SD_FILENAME "${SD_PATH}" NAME_WE)
         string(SUBSTRING "${SD_FILENAME}" 11 1 SD_MAJOR_VERSION)
         string(TOUPPER ${SOFTDEVICE} SOFTDEVICE_FLAG)
-        add_compile_definitions(
+        target_compile_definitions("${PROJECT_NAME}" PRIVATE
                 SOFTDEVICE_PRESENT
                 NRF_SD_BLE_API_VERSION=${SD_MAJOR_VERSION}
                 ${SOFTDEVICE_FLAG}
@@ -47,25 +47,23 @@ if(SOFTDEVICE)
 endif()
 
 if(ENABLE_SPIM3)
-    add_compile_definitions(
-            NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED=0
-    )
+    target_compile_definitions("${PROJECT_NAME}" PRIVATE NRFX_SPIM3_NRF52840_ANOMALY_198_WORKAROUND_ENABLED=0)
 endif()
 
 if(HEAP_SIZE)
-    add_compile_definitions(__HEAP_SIZE=${HEAP_SIZE})
+    target_compile_definitions("${PROJECT_NAME}" PRIVATE __HEAP_SIZE=${HEAP_SIZE})
 endif()
 
 if(STACK_SIZE)
-    add_compile_definitions(__STACK_SIZE=${STACK_SIZE})
+    target_compile_definitions("${PROJECT_NAME}" PRIVATE __STACK_SIZE=${STACK_SIZE})
 endif()
 
 if(DEFINED ENABLE_USB_SERIAL)
-    add_compile_definitions(ENABLE_USB_SERIAL=${ENABLE_USB_SERIAL})
+    target_compile_definitions("${PROJECT_NAME}" PRIVATE ENABLE_USB_SERIAL=${ENABLE_USB_SERIAL})
 endif()
 
 if(DEFINED ENABLE_BOOTLOADER)
-    add_compile_definitions(ENABLE_BOOTLOADER=${ENABLE_BOOTLOADER})
+    target_compile_definitions("${PROJECT_NAME}" PRIVATE ENABLE_BOOTLOADER=${ENABLE_BOOTLOADER})
 endif()
 
 get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)

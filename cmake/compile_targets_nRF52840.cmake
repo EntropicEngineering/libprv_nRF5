@@ -21,7 +21,7 @@ if (NOT is_included)
     message("'make sdk_config' will launch CMSIS Configuration Wizard")
 
     add_custom_target(flash
-            COMMAND nrfjprog -f nrf52 --program "${PROJECT_NAME}.hex" --sectorerase --verify --fast --reset
+            COMMAND nrfjprog -f nrf52 --program ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex --sectorerase --verify --fast --reset
             )
     message("'make flash' will flash ${PROJECT_NAME}.hex onto a connected board")
 
