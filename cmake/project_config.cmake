@@ -64,6 +64,10 @@ if(DEFINED ENABLE_USB_SERIAL)
     add_compile_definitions(ENABLE_USB_SERIAL=${ENABLE_USB_SERIAL})
 endif()
 
+if(DEFINED ENABLE_BOOTLOADER)
+    add_compile_definitions(ENABLE_BOOTLOADER=${ENABLE_BOOTLOADER})
+endif()
+
 get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
 message("LIB_ROOT is ${LIB_ROOT}")
 
