@@ -33,7 +33,7 @@ if (NOT is_included)
     add_custom_target(flash_blink_canary
             COMMAND nrfjprog -f nrf52 --program "${SDK_ROOT}/examples/peripheral/blinky/hex/blinky_pca10056.hex" --sectorerase --verify --fast --reset
             )
-    message("'make flash_blink' will reflash the nRF52DK LED blinky app.")
+    message("'make flash_blink_canary' will reflash the nRF52DK LED blinky app.")
 
     if (SOFTDEVICE)
         add_custom_target(flash_${SOFTDEVICE}
