@@ -1,6 +1,3 @@
-# pragma once
-include_guard(GLOBAL)
-
 add_compile_definitions(
         BOARD_PCA10056
         NRF52840_XXAA
