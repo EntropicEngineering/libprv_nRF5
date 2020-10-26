@@ -9,6 +9,7 @@ set(CMAKE_FIND_APPBUNDLE LAST)
 # Precompiler definitions
 target_compile_definitions("${PROJECT_NAME}" PRIVATE
         USE_APP_CONFIG
+        HARDWARE_REV=${HARDWARE_REV}
         APP_TIMER_V2
         APP_TIMER_V2_RTC1_ENABLED
         CONFIG_GPIO_AS_PINRESET
@@ -31,19 +32,20 @@ target_link_libraries("${PROJECT_NAME}"
 )
 
 if(SOFTDEVICE)
-    file (GLOB SD_PATH "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_*_softdevice.hex")
+    file (GLOB SD_PATH "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_${SD_VERSION}_softdevice.hex")
     if (EXISTS "${SD_PATH}")
-        get_filename_component(SD_FILENAME "${SD_PATH}" NAME_WE)
-        string(SUBSTRING "${SD_FILENAME}" 11 1 SD_MAJOR_VERSION)
+        string(SUBSTRING "${SD_VERSION}" 0 1 SD_MAJOR_VERSION)
         string(TOUPPER ${SOFTDEVICE} SOFTDEVICE_FLAG)
         target_compile_definitions("${PROJECT_NAME}" PRIVATE
                 SOFTDEVICE_PRESENT
                 NRF_SD_BLE_API_VERSION=${SD_MAJOR_VERSION}
                 ${SOFTDEVICE_FLAG}
-        )
+                )
     else()
-        message(FATAL_ERROR "Invalid softdevice: ${SOFTDEVICE}")
+        message(FATAL_ERROR "Invalid softdevice: ${SOFTDEVICE} version ${SD_VERSION}")
     endif()
+else()
+    message(FATAL_ERROR "No softdevice specified")
 endif()
 
 if(ENABLE_SPIM3)
