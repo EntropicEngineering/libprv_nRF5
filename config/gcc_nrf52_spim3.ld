@@ -7,8 +7,8 @@ MEMORY
 {
   FLASH (rx) : ORIGIN = 0x0, LENGTH = 0x100000
   /* SPIM3 needs a dedicated physical RAM block that won't be touched by the CPU during DMA. */
-  SPIM3_RX_RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 0x1000
-  SPIM3_TX_RAM (rwx) : ORIGIN = 0x20001000, LENGTH = 0x1000
+  SPIM3_RX_RAM (rwi) : ORIGIN = 0x20000000, LENGTH = 0x1000
+  SPIM3_TX_RAM (rwi) : ORIGIN = 0x20001000, LENGTH = 0x1000
   /* Application RAM size is 256K - 8K */
   RAM (rwx) :  ORIGIN = 0x20002000, LENGTH = 0x3E000
 }

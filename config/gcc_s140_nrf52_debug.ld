@@ -12,20 +12,20 @@ MEMORY
   /* Put RTT data at top of RAM. */
   /* RTT_CB LENGTH = 24 + SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS * 24
                         + SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS * 24 */
-  RTT_CB (rwx) : ORIGIN = 0x2003EF78, LENGTH = 0x78
+  RTT_CB (rw) : ORIGIN = 0x2003EF78, LENGTH = 0x78
   /* RTT_BUFFERS LENGTH = + SEGGER_RTT_CONFIG_BUFFER_SIZE_UP
                           + SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN */
   /* RTT_BUFFERS ORIGIN = 0x20040000 - CB LENGTH - BUFFERS LENGTH */
-  RTT_BUFFERS (rwx) : ORIGIN = 0x2003EFF0, LENGTH = 0x1010
+  RTT_BUFFERS (rw) : ORIGIN = 0x2003EFF0, LENGTH = 0x1010
 }
 
 SECTIONS
 {
-  .rtt_buffers :
+  .rtt_buffers(NOLOAD) :
   {
     KEEP(*(.rtt_buffers))
   } > RTT_BUFFERS
-  .rtt_cb :
+  .rtt_cb(NOLOAD) :
   {
     KEEP(*(.rtt_cb))
   } > RTT_CB
