@@ -23,7 +23,7 @@ static void ms_irq_handler(nrfx_rtc_int_type_t __unused int_type) {
 
 static void rtc_init(void) {
     nrfx_rtc_config_t ms_rtc_config = NRFX_RTC_DEFAULT_CONFIG;
-    // fRTC [Hz] = 32768 / (PRESCALER + 1 )
+    // fRTC [Hz] = 32768 / ( PRESCALER + 1 )
     // PRESCALER of 31 => 1024 Hz, ~0.977 ms tick
     // PRESCALER of 32 => 992.969696... Hz, ~1.007 ms tick
     ms_rtc_config.prescaler = 32;   // ms timer
