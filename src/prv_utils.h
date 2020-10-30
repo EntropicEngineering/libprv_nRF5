@@ -5,8 +5,6 @@
 #ifndef PRV_UTILS_H
 #define PRV_UTILS_H
 
-#include "nrf.h"
-
 #include "app_util_platform.h"
 #include "app_scheduler.h"
 
