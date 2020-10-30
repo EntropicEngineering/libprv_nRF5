@@ -44,8 +44,6 @@ if(SOFTDEVICE)
     else()
         message(FATAL_ERROR "Invalid softdevice: ${SOFTDEVICE} version ${SD_VERSION}")
     endif()
-else()
-    message(FATAL_ERROR "No softdevice specified")
 endif()
 
 if(ENABLE_SPIM3)
@@ -86,7 +84,6 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/mpu/nrf_mpu_lib.c"
         "${SDK_ROOT}/components/boards/boards.c"
         "${SDK_ROOT}/components/libraries/button/app_button.c"
-        "${SDK_ROOT}/components/libraries/bootloader/dfu/nrf_dfu_svci.c"
         "${SDK_ROOT}/components/libraries/crc16/crc16.c"
         "${SDK_ROOT}/components/libraries/util/app_error.c"
         "${SDK_ROOT}/components/libraries/util/app_error_handler_gcc.c"
@@ -126,7 +123,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/sortlist/nrf_sortlist.c"
         "${SDK_ROOT}/components/libraries/strerror/nrf_strerror.c"
         "${SDK_ROOT}/integration/nrfx/legacy/nrf_drv_clock.c"
-#        "${SDK_ROOT}/integration/nrfx/legacy/nrf_drv_power.c"
+        "${SDK_ROOT}/integration/nrfx/legacy/nrf_drv_power.c"
 #        "${SDK_ROOT}/integration/nrfx/legacy/nrf_drv_uart.c"
         "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c>"
         "$<$<NOT:$<BOOL:${SOFTDEVICE}>>:${SDK_ROOT}/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c>"
@@ -146,6 +143,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_uart.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_uarte.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_usbd.c"
+        "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/libraries/bootloader/dfu/nrf_dfu_svci.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_advdata.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/ble_advertising/ble_advertising.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/ble/common/ble_conn_params.c>"
