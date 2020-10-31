@@ -30,4 +30,6 @@
  */
 void prv_set_UICR(uint32_t regout0_vout, uint32_t nfcpins_protect);
 
+void prv_logging_init(void);
+
 #endif //PRV_UTILS_H

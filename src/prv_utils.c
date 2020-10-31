@@ -3,6 +3,15 @@
 
 #include "prv_utils.h"
 
+#ifdef DEBUG
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+#include "nrf_log_backend_rtt.h"
+#if !ENABLE_BOOTLOADER
+#include "SEGGER_RTT.h"
+#endif
+#endif  // DEBUG
+
 /**
  * @brief Function for updating UICR registers.
  *
@@ -44,3 +53,20 @@ void prv_set_UICR(uint32_t regout0_vout, uint32_t nfcpins_protect) {
     }
 }
 
+void prv_logging_init(void) {
+#ifdef DEBUG
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+#if !ENABLE_BOOTLOADER
+    // RTT init code doesn't zero-out magic string, so force the issue here
+    memset(&_SEGGER_RTT, 0, sizeof(SEGGER_RTT_CB));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+#else
+    NRF_LOG_BACKEND_RTT_DEF(rtt_log_backend);
+    int32_t backend_id = -1;
+    backend_id = nrf_log_backend_add(&rtt_log_backend, NRF_LOG_SEVERITY_DEBUG);
+    ASSERT(backend_id >= 0);
+    nrf_log_backend_enable(&rtt_log_backend);
+#endif
+    NRF_LOG_FLUSH();
+#endif  // DEBUG
+}

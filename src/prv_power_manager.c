@@ -15,8 +15,7 @@
 static bool shutdown_softdevice(void) {
     #ifdef SOFTDEVICE_PRESENT
     if (nrf_sdh_is_enabled()) {
-        nrfx_err_t err_code = nrf_sdh_disable_request();
-        APP_ERROR_CHECK(err_code);
+        APP_ERROR_CHECK(nrf_sdh_disable_request());
     }
     return !nrf_sdh_is_enabled();
     #else
@@ -40,19 +39,21 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event) {
         case NRF_PWR_MGMT_EVT_PREPARE_RESET:
             NRF_LOG_INFO("Power management wants to reset to DFU mode.");
             if (!shutdown_outputs()) return false;
-            return shutdown_softdevice();
+            if (!shutdown_softdevice()) return false;
+            NRF_LOG_INFO("Power management allowed to reset to DFU mode.");
+            break;
 
         case NRF_PWR_MGMT_EVT_PREPARE_SYSOFF:
         case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
             if (!shutdown_outputs()) return false;
             if (!shutdown_softdevice()) return false;
-            return shutdown_power();
+            if (!shutdown_power()) return false;
+            break;
 
         default:
-            return true;
+            break;
     }
 
-    NRF_LOG_INFO("Power management allowed to reset to DFU mode.");
     return true;
 }
 
