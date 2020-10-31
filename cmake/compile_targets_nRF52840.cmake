@@ -44,7 +44,7 @@ if (NOT is_included)
         if (NOT EXISTS "${PRIVATE_KEY_PATH}")
             message(FATAL_ERROR "Invalid private key specified")
         endif()
-        add_custom_target(flash
+        add_custom_target(flash_${PROJECT_NAME}
                 COMMAND nrfutil settings generate
                                     --family NRF52840
                                     --bl-settings-version 2
@@ -64,7 +64,7 @@ if (NOT is_included)
                 BYPRODUCTS "${CMAKE_CURRENT_BINARY_DIR}/settings.hex" "${CMAKE_CURRENT_BINARY_DIR}/merged.hex"
                 VERBATIM
                 )
-        message("'make flash' will flash application and bootloader settings onto a connected board")
+        message("'make flash_${PROJECT_NAME}' will flash application and bootloader settings onto a connected board")
 
         add_custom_target(dfu_pkg
                 COMMAND nrfutil pkg generate --application "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex"
@@ -81,11 +81,11 @@ if (NOT is_included)
         message("'make dfu_pkg' will generate 'latest_firmware.zip', ready to be uploaded via the Nordic DFU service.")
 
     else()
-        add_custom_target(flash
+        add_custom_target(flash_${PROJECT_NAME}
                 COMMAND nrfjprog -f nrf52 --program "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex" --sectorerase --verify --fast --reset
                 DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex"
                 )
-        message("'make flash' will flash ${PROJECT_NAME}.hex onto a connected board")
+        message("'make flash_${PROJECT_NAME}' will flash ${PROJECT_NAME}.hex onto a connected board")
     endif()
 endif ()
 
