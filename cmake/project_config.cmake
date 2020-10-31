@@ -171,6 +171,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh_ble.c>"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/softdevice/common/nrf_sdh_soc.c>"
+        "${LIB_ROOT}/src/prv_power_manager.c"
         "${LIB_ROOT}/src/prv_temperature.c"
         "${LIB_ROOT}/src/prv_timers.c"
         "${LIB_ROOT}/src/prv_utils.c"
