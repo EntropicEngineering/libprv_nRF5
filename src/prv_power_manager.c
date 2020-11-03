@@ -12,6 +12,9 @@
 #include "nrf_sdh.h"
 #endif
 
+static shutdown_func_t application_fn = NULL;
+static shutdown_func_t power_fn = NULL;
+
 static bool shutdown_softdevice(void) {
     #ifdef SOFTDEVICE_PRESENT
     if (nrf_sdh_is_enabled()) {
@@ -38,16 +41,22 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event) {
         case NRF_PWR_MGMT_EVT_PREPARE_DFU:
         case NRF_PWR_MGMT_EVT_PREPARE_RESET:
             NRF_LOG_INFO("Power management wants to reset to DFU mode.");
-            if (!shutdown_outputs()) return false;
+            if (application_fn && !application_fn()) return false;
+            // Stop calling if function return true;
+            application_fn = NULL;
             if (!shutdown_softdevice()) return false;
             NRF_LOG_INFO("Power management allowed to reset to DFU mode.");
             break;
 
         case NRF_PWR_MGMT_EVT_PREPARE_SYSOFF:
         case NRF_PWR_MGMT_EVT_PREPARE_WAKEUP:
-            if (!shutdown_outputs()) return false;
+            if (application_fn && !application_fn()) return false;
+            // Stop calling if function return true;
+            application_fn = NULL;
             if (!shutdown_softdevice()) return false;
-            if (!shutdown_power()) return false;
+            if (power_fn && !power_fn()) return false;
+            // Stop calling if function return true;
+            power_fn = NULL;
             break;
 
         default:
@@ -71,6 +80,8 @@ void prv_wait(void) {
     nrf_pwr_mgmt_run();
 }
 
-void prv_power_manager_init(void) {
+void prv_power_manager_init(shutdown_func_t app, shutdown_func_t power) {
+    application_fn = app;
+    power_fn = power;
     APP_ERROR_CHECK(nrf_pwr_mgmt_init());
 }
