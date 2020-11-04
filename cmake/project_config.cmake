@@ -108,6 +108,8 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/balloc/nrf_balloc.c"
         "${SDK_ROOT}/external/fprintf/nrf_fprintf.c"
         "${SDK_ROOT}/external/fprintf/nrf_fprintf_format.c"
+        "${SDK_ROOT}/external/thedotfactory_fonts/orkney24pts.c"
+        "${SDK_ROOT}/external/thedotfactory_fonts/orkney8pts.c"
         "${SDK_ROOT}/components/libraries/fds/fds.c"
         "${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage.c"
         "$<$<BOOL:${SOFTDEVICE}>:${SDK_ROOT}/components/libraries/fstorage/nrf_fstorage_sd.c>"
