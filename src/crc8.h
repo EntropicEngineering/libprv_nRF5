@@ -23,7 +23,7 @@ typedef struct {
     .polynomial = 0x07, \
     .initial_value = 0, \
     .final_value = 0, \
-    .reflect_intput = false, \
+    .reflect_input = false, \
     .reflect_result = false \
 }
 
@@ -41,9 +41,9 @@ typedef struct {
  * CRC calculations.
  *
  * @param p_crc8            Pointer to memory where crc-8 structure values will be stored.
- * @param crc8_conf         Configuration parameters for crc-8 calculator.
+ * @param p_crc8_conf         Configuration parameters for crc-8 calculator.
  */
-void crc8_init(crc8_t *p_crc8, crc8_conf_t crc8_conf);
+void crc8_init(crc8_t *p_crc8, crc8_conf_t const *p_crc8_conf);
 
 /**@brief   Calculate the crc-8 of a data.
  *
@@ -52,6 +52,6 @@ void crc8_init(crc8_t *p_crc8, crc8_conf_t crc8_conf);
  * @param length    Length of data.
  * @return          Calculated CRC value for data and given crc-8.
  */
-uint8_t crc8_calc(crc8_t *p_crc8, uint8_t *p_data, size_t length);
+uint8_t crc8_calc(crc8_t const *p_crc8, uint8_t const *p_data, size_t length);
 
 #endif //CRC8_H

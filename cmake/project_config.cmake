@@ -137,6 +137,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_pwm.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_rtc.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_spim.c"
+        "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_spis.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_swi.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_systick.c"
         "${SDK_ROOT}/modules/nrfx/drivers/src/nrfx_temp.c"
