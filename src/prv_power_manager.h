@@ -5,13 +5,10 @@
 #ifndef PRV_POWER_MANAGER_H
 #define PRV_POWER_MANAGER_H
 
-#include <stdbool.h>
+#include "prv_utils.h"
 
 ///@brief Trigger system shutdown.
 void prv_shutdown(void);
-
-/**@brief   Sleep until an event is received. */
-void prv_wait(void);
 
 /**@brief   Function that shuts down outputs or power.
  *

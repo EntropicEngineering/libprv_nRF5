@@ -32,4 +32,7 @@ void prv_set_UICR(uint32_t regout0_vout, uint32_t nfcpins_protect);
 
 void prv_logging_init(void);
 
+/**@brief   Sleep until an event is received. */
+void prv_wait(void);
+
 #endif //PRV_UTILS_H
