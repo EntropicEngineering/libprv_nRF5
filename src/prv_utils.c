@@ -12,6 +12,22 @@
 #endif
 #endif  // DEBUG
 
+typedef struct {
+    uint32_t namesz;
+    uint32_t descsz;
+    uint32_t type;
+    uint8_t data[];
+} elf_note_section_t;
+
+extern const elf_note_section_t g_note_build_id;
+
+build_id_hash *prv_get_build_id(void) {
+    // Desc field is 4-byte aligned, but namesz doesn't include padding.
+    size_t const name_padding = sizeof(uint32_t) - 1U;
+    size_t desc_offset = (g_note_build_id.namesz + name_padding) & ~name_padding;
+    return (build_id_hash *) &g_note_build_id.data[desc_offset];
+}
+
 /**
  * @brief Function for updating UICR registers.
  *

@@ -42,7 +42,7 @@ SECTIONS
   .mem_section_dummy_rom :
   {
   }
-    .nrf_queue :
+  .nrf_queue :
   {
     PROVIDE(__start_nrf_queue = .);
     KEEP(*(.nrf_queue))
@@ -60,7 +60,7 @@ SECTIONS
     KEEP(*(SORT(.log_const_data*)))
     PROVIDE(__stop_log_const_data = .);
   } > FLASH
-    .nrf_balloc :
+  .nrf_balloc :
   {
     PROVIDE(__start_nrf_balloc = .);
     KEEP(*(.nrf_balloc))
@@ -72,17 +72,16 @@ SECTIONS
     KEEP(*(SORT(.crypto_data*)))
     PROVIDE(__stop_crypto_data = .);
   } > FLASH
-    .cli_command :
-  {
-    PROVIDE(__start_cli_command = .);
-    KEEP(*(.cli_command))
-    PROVIDE(__stop_cli_command = .);
-  } > FLASH
-  .log_backends :
+ .log_backends :
   {
     PROVIDE(__start_log_backends = .);
     KEEP(*(SORT(.log_backends*)))
     PROVIDE(__stop_log_backends = .);
+  } > FLASH
+  .gnu_build_id :
+  {
+    PROVIDE(g_note_build_id = .);
+    KEEP(*(.note.gnu.build_id))
   } > FLASH
 
 } INSERT AFTER .text

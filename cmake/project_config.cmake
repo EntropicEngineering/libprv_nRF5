@@ -257,8 +257,11 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
 
 target_compile_options("${PROJECT_NAME}" PRIVATE -Wall $<$<CONFIG:Debug>:-ggdb>)
 
-# Add linker script
 target_link_options("${PROJECT_NAME}" PRIVATE
+        # Add linker script
         "-T${LIB_ROOT}/config/gcc$<$<BOOL:${SOFTDEVICE}>:_${SOFTDEVICE}>_nrf52$<$<BOOL:${ENABLE_SPIM3}>:_spim3>$<$<CONFIG:Debug>:_debug>.ld"
+        # Add GNU build ID hash
+        "-Wl,--build-id"
+        # Generate memory map
         "-Wl,-Map=${PROJECT_NAME}.map"
         )

@@ -21,6 +21,10 @@
 #define DEBUG_BREAKPOINT_CHECK(condition)
 #endif
 
+typedef uint8_t build_id_hash[20];  // SHA-160 of elf sections
+
+build_id_hash *prv_get_build_id(void);
+
 /**
  * @brief Function for updating UICR registers.
  *

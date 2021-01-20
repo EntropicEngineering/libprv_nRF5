@@ -79,13 +79,13 @@ SECTIONS
     KEEP(*(SORT(.sdh_req_observers*)))
     PROVIDE(__stop_sdh_req_observers = .);
   } > FLASH
-    .nrf_queue :
+  .nrf_queue :
   {
     PROVIDE(__start_nrf_queue = .);
     KEEP(*(.nrf_queue))
     PROVIDE(__stop_nrf_queue = .);
   } > FLASH
-    .nrf_balloc :
+  .nrf_balloc :
   {
     PROVIDE(__start_nrf_balloc = .);
     KEEP(*(.nrf_balloc))
@@ -108,6 +108,11 @@ SECTIONS
     PROVIDE(__start_log_backends = .);
     KEEP(*(SORT(.log_backends*)))
     PROVIDE(__stop_log_backends = .);
+  } > FLASH
+  .gnu_build_id :
+  {
+    PROVIDE(g_note_build_id = .);
+    KEEP(*(.note.gnu.build_id))
   } > FLASH
 
 } INSERT AFTER .text
