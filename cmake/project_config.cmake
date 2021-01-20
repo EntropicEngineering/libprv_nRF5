@@ -255,7 +255,14 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/external/utf_converter"
         )
 
-target_compile_options("${PROJECT_NAME}" PRIVATE -Wall $<$<CONFIG:Debug>:-ggdb>)
+target_compile_options("${PROJECT_NAME}" PRIVATE
+        # Warn on everything
+        -Wall
+        # Emit debug symbols tailored for gdb
+        $<$<CONFIG:Debug>:-ggdb>
+        # Use relative paths in debug symbols
+        -fdebug-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
+        )
 
 target_link_options("${PROJECT_NAME}" PRIVATE
         # Add linker script
