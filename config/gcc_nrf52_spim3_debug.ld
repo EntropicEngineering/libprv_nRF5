@@ -5,7 +5,7 @@ GROUP(-lgcc -lc -lnosys)
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = 0x27000, LENGTH = 0xd9000
+  FLASH (rx) : ORIGIN = 0x0, LENGTH = 0x100000
   /* SPIM3 needs a dedicated physical RAM block that won't be touched by the CPU during DMA. */
   SPIM3_RX_RAM (rwi) : ORIGIN = 0x20000000, LENGTH = 0x1000
   SPIM3_TX_RAM (rwi) : ORIGIN = 0x20001000, LENGTH = 0x1000

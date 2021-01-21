@@ -23,7 +23,7 @@ if(NOT EXISTS "${CMAKE_C_COMPILER}")
 endif()
 
 if(NOT EXISTS "${CMAKE_C_COMPILER}")
-    message(SEND_ERROR "Ensure arm-none-eabi-gcc is on your path, or set the GNUARMEMB_TOOLCHAIN_PATH environment variable")
+    message(FATAL_ERROR "Ensure arm-none-eabi-gcc is on your path, or set the GNUARMEMB_TOOLCHAIN_PATH environment variable")
 else()
     set(CMAKE_CXX_COMPILER "${ARM_TOOLCHAIN_BIN}/${ARM_TOOLCHAIN}-g++${ext}" CACHE PATH "")
     set(CMAKE_ASM_COMPILER "${CMAKE_C_COMPILER}" CACHE PATH "")
