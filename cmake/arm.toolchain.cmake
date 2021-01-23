@@ -42,6 +42,7 @@ set(ARM_COMPILER_FLAGS
         )
 
 set(ARM_OPTIMIZATION_FLAGS
+        -flto
         -fno-common
         -ffunction-sections
         -fdata-sections
@@ -51,6 +52,7 @@ set(ARM_OPTIMIZATION_FLAGS
         )
 
 set(ARM_LINKER_FLAGS
+        -Wl,-flto
         -Wl,--gc-sections
         --specs=nano.specs
         --specs=nosys.specs
