@@ -49,5 +49,6 @@ uint8_t crc8_calc(crc8_t const *p_crc8, uint8_t const *data, size_t length) {
             length--;
         }
     }
-    return p_crc8->reflect_result ? bit_reverse(crc) ^ p_crc8->final_value : crc ^ p_crc8->final_value;
+    return p_crc8->reflect_result * (bit_reverse(crc) ^ p_crc8->final_value) +
+           (1 - p_crc8->reflect_result) * (crc ^ p_crc8->final_value);
 }
