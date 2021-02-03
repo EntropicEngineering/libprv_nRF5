@@ -27,7 +27,7 @@ static __inline uint8_t bit_reverse (uint8_t b) {
 void crc8_init(crc8_t *p_crc8, crc8_conf_t const *p_crc8_conf) {
     ASSERT(p_crc8);
     ASSERT(p_crc8_conf);
-    crc8_state_t *state = (crc8_state_t *) p_crc8->state;
+    crc8_state_t *state = (crc8_state_t *) &p_crc8->state;
     state->initial_value = p_crc8_conf->initial_value;
     state->final_value = p_crc8_conf->final_value;
     state->reflect_input = p_crc8_conf->reflect_input;
