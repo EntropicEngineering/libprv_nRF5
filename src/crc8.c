@@ -44,9 +44,9 @@ void crc8_init(crc8_t *p_crc8, crc8_conf_t const *p_crc8_conf) {
 
 uint8_t crc8_calc(crc8_t const *p_crc8, uint8_t const *data, size_t length) {
     ASSERT(p_crc8);
-    ASSERT(((crc8_state_t *) p_crc8->state)->initialized);
+    ASSERT(p_crc8->state);
     ASSERT(data);
-    crc8_state_t *state = (crc8_state_t *) p_crc8->state;
+    crc8_state_t *state = (crc8_state_t *) &p_crc8->state;
     uint8_t crc = state->initial_value;
     if (state->reflect_input) {
         while (length) {
