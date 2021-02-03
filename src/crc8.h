@@ -28,10 +28,7 @@ typedef struct {
 }
 
 typedef struct {
-    uint8_t initial_value;
-    uint8_t final_value;
-    bool reflect_input;
-    bool reflect_result;
+    uint32_t state;
     uint8_t lookup_table[256];
 } crc8_t;
 
