@@ -14,24 +14,26 @@ typedef struct __packed {
 } debouncer_t;
 
 uint8_t prv_debounced(prv_debouncer_t volatile *p_debouncer) {
+    ASSERT(p_debouncer);
     return ((debouncer_t *) p_debouncer)->stable_value;
 }
 
 bool prv_debounce(prv_debouncer_t volatile *p_debouncer, uint8_t value, uint8_t *p_stable) {
-    ASSERT(((debouncer_t *) p_debouncer)->max_count);
+    ASSERT(p_debouncer);
     debouncer_t *d = (debouncer_t *) p_debouncer;
+    bool changed = false;
     if (value != d->last_value) {
         d->countdown = d->max_count;
         d->last_value = value;
     } else if (d->countdown > 0) {
         d->countdown--;
     } else if (d->countdown == 0){
-        *p_stable = d->stable_value = value;
         d->countdown--;
-        return true;
+        changed = d->stable_value != value;
+        d->stable_value = value;
     }
-    *p_stable = d->stable_value;
-    return false;
+    if (p_stable) *p_stable = d->stable_value;
+    return changed;
 }
 
 void prv_debounce_init(prv_debouncer_t volatile *p_debouncer, int8_t max_count, uint8_t initial_value) {
