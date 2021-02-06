@@ -23,10 +23,11 @@ bool prv_debounce(prv_debouncer_t volatile *p_debouncer, uint8_t value, uint8_t 
     if (value != d->last_value) {
         d->countdown = d->max_count;
         d->last_value = value;
-    } else if (d->countdown) {
+    } else if (d->countdown > 0) {
         d->countdown--;
-    } else {
+    } else if (d->countdown == 0){
         *p_stable = d->stable_value = value;
+        d->countdown--;
         return true;
     }
     *p_stable = d->stable_value;
