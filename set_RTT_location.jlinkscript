@@ -1,0 +1,5 @@
+/* Command-line options: -nogui -select USB -device nRF52840_xxAA -if SWD -endian little -speed 4000 -jlinkscriptfile external/libprv_nRF5/set_RTT_location.jlinkscript */
+/* Alternatively, run command from gdb CLI: eval "monitor exec SetRTTAddr %p", &_SEGGER_RTT */
+int SetupTarget(void) {
+    JLINK_ExecCommand("SetRTTAddr 0x2003EF78");
+}
