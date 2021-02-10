@@ -7,6 +7,9 @@
 #include "nrf_pwr_mgmt.h"
 #include "nrf_log.h"
 #include "app_error.h"
+#if DEBUG
+#include "app_scheduler.h"
+#endif
 
 #ifdef SOFTDEVICE_PRESENT
 #include "nrf_sdh.h"
@@ -72,7 +75,8 @@ static bool app_shutdown_handler(nrf_pwr_mgmt_evt_t event) {
 NRF_PWR_MGMT_HANDLER_REGISTER(app_shutdown_handler, 0);
 
 void prv_shutdown(void) {
-    NRF_LOG_DEBUG("shutting down");
+    NRF_LOG_DEBUG("Shutting down. Scheduler queue utilization - Current: %d, Maximum: %d",
+                  app_sched_queue_space_get(), app_sched_queue_utilization_get());
     nrf_pwr_mgmt_shutdown(NRF_PWR_MGMT_SHUTDOWN_GOTO_SYSOFF);
 }
 

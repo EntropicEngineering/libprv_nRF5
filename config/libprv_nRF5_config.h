@@ -98,6 +98,9 @@
 #endif // _ENABLE_USB
 
 #define APP_SCHEDULER_ENABLED 1
+#if DEBUG
+#define APP_SCHEDULER_WITH_PROFILER 1
+#endif
 
 /// Enable Power Management Module.
 #define NRF_PWR_MGMT_ENABLED 1
