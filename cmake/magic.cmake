@@ -48,3 +48,5 @@ endif()
 
 set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_MODULE_PATH}/arm.toolchain.cmake")
 set(CMAKE_PROJECT_INCLUDE "${CMAKE_PROJECT_CONFIG}")
+
+set(LIBPRV true)
