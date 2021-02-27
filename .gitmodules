@@ -1,6 +1,3 @@
 [submodule "tests/external/gen-xfakes"]
 	path = tests/external/gen-xfakes
 	url = https://github.com/EntropicEngineering/gen-xfakes.git
-[submodule "tests/external/Catch2"]
-	path = tests/external/Catch2
-	url = https://github.com/catchorg/Catch2.git

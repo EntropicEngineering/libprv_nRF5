@@ -35,8 +35,8 @@ set(CMAKE_CXX_STANDARD 11)
 # Find nRF5 SDK
 if (NOT EXISTS "${SDK_ROOT}")
     file(GLOB _SDK_ROOT CONFIGURE_DEPENDS
-            "${CMAKE_CURRENT_SOURCE_DIR}/external/nRF5_SDK*"
-            "${CMAKE_CURRENT_SOURCE_DIR}/external/nRF5SDK*"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../external/nRF5_SDK*"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../external/nRF5SDK*"
             )
     if (EXISTS "${_SDK_ROOT}")
         get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
@@ -53,9 +53,15 @@ if(NOT EXISTS "${CMAKE_PROJECT_CONFIG}")
     set(CMAKE_PROJECT_CONFIG "${CMAKE_MODULE_PATH}/project_config.cmake")
 endif()
 
-set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_MODULE_PATH}/arm.toolchain.cmake")
+set(LIBPRV_TEST true)
+
+include(FetchContent)
+FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG        v2.13.4)
+
+FetchContent_MakeAvailable(Catch2)
+
+#set(CMAKE_PROJECT_INCLUDE_BEFORE "${CMAKE_MODULE_PATH}/arm.toolchain.cmake")
 set(CMAKE_PROJECT_INCLUDE "${CMAKE_PROJECT_CONFIG}")
-
-set(LIBPRV true)
-
-# TODO: Add 'make tests' if 'tests' dir exists, otherwise nag: https://cmake.org/pipermail/cmake/2013-August/055602.html
