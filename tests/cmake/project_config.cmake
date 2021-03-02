@@ -3,7 +3,6 @@ include_guard(GLOBAL)
 
 # Configure project
 add_executable("${PROJECT_NAME}")
-set_target_properties("${PROJECT_NAME}" PROPERTIES SUFFIX ".elf")
 
 # On macOS, have cmake look for unix libraries first
 set(CMAKE_FIND_FRAMEWORK LAST)
@@ -11,6 +10,7 @@ set(CMAKE_FIND_APPBUNDLE LAST)
 
 # Precompiler definitions
 target_compile_definitions("${PROJECT_NAME}" PRIVATE
+        SUPPRESS_INLINE_IMPLEMENTATION
         USE_APP_CONFIG
         HARDWARE_REV=${HARDWARE_REV}
         APP_TIMER_V2
@@ -31,7 +31,6 @@ target_compile_definitions("${PROJECT_NAME}" PRIVATE
 target_link_libraries("${PROJECT_NAME}"
         Catch2::Catch2
         c
-        nosys
         m
 )
 
@@ -188,6 +187,7 @@ target_sources("${PROJECT_NAME}" PRIVATE
         )
 
 target_include_directories("${PROJECT_NAME}" PRIVATE
+        "$<$<BOOL:${INCLUDE_OVERRIDES}>:${INCLUDE_OVERRIDES}>"
         "${LIB_ROOT}/config"
         "${LIB_ROOT}/src"
         "${SDK_ROOT}/components"
@@ -259,8 +259,12 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
         )
 
 target_compile_options("${PROJECT_NAME}" PRIVATE
+        # Disable errors about pointer casts
+        -fms-extensions
         # Warn on everything
         -Wall
+        -Wno-unused-function
+        -Wno-unused-variable
         # Emit debug symbols tailored for gdb
         $<$<CONFIG:Debug>:-ggdb>
         # Use relative paths in debug symbols
