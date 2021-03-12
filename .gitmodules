@@ -1,3 +1,6 @@
 [submodule "tests/external/gen-xfakes"]
 	path = tests/external/gen-xfakes
 	url = https://github.com/EntropicEngineering/gen-xfakes.git
+[submodule "prv_ble"]
+	path = prv_ble
+	url = https://github.com/EntropicEngineering/prv_ble.git
