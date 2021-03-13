@@ -8,14 +8,6 @@ if (NOT TARGET "${PROJECT_NAME}")
     return()
 endif ()
 
-get_target_property(ext "${PROJECT_NAME}" SUFFIX)
-
-add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD
-        COMMAND "${CMAKE_OBJCOPY}" -O binary "${PROJECT_NAME}${ext}" "${PROJECT_NAME}.bin"
-        COMMAND "${CMAKE_OBJCOPY}" -O ihex "${PROJECT_NAME}${ext}" "${PROJECT_NAME}.hex"
-        BYPRODUCTS ${PROJECT_NAME}.hex ${PROJECT_NAME}.bin
-        )
-
 get_directory_property(is_included PARENT_DIRECTORY)
 if (NOT is_included)
     add_custom_target(sdk_config
@@ -87,12 +79,4 @@ if (NOT is_included)
                 )
         message("'make flash_${PROJECT_NAME}' will flash ${PROJECT_NAME}.hex onto a connected board")
     endif()
-endif ()
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY ADDITIONAL_CLEAN_FILES ${PROJECT_NAME}.map)
-
-if (EXISTS ${SIZE_FUNC})
-    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD
-            COMMAND "${SIZE_FUNC}" "${PROJECT_NAME}${ext}"
-            )
 endif ()

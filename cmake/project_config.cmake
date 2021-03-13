@@ -25,11 +25,14 @@ target_compile_definitions("${PROJECT_NAME}" PRIVATE
         uECC_VLI_NATIVE_LITTLE_ENDIAN=1
 )
 
-target_link_libraries("${PROJECT_NAME}"
+target_link_libraries("${PROJECT_NAME}" PRIVATE
         c
         nosys
         m
 )
+
+get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
+message(STATUS "LIB_ROOT is ${LIB_ROOT}")
 
 if(SOFTDEVICE)
     file (GLOB SD_PATH "${SDK_ROOT}/components/softdevice/${SOFTDEVICE}/hex/${SOFTDEVICE}_nrf52_${SD_VERSION}_softdevice.hex")
@@ -44,6 +47,9 @@ if(SOFTDEVICE)
     else()
         message(FATAL_ERROR "Invalid softdevice: ${SOFTDEVICE} version ${SD_VERSION}")
     endif()
+
+    # Compile & link BLE protocol JSON definitions from prv_ble repo
+    add_subdirectory("${LIB_ROOT}/prv_ble")
 endif()
 
 if(ENABLE_SPIM3)
@@ -65,9 +71,6 @@ endif()
 if(DEFINED ENABLE_BOOTLOADER)
     target_compile_definitions("${PROJECT_NAME}" PRIVATE ENABLE_BOOTLOADER=${ENABLE_BOOTLOADER})
 endif()
-
-get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
-message("LIB_ROOT is ${LIB_ROOT}")
 
 target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/modules/nrfx/mdk/gcc_startup_nrf52840.S"
@@ -204,7 +207,6 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
         "$<$<CONFIG:Debug>:${SDK_ROOT}/components/libraries/stack_guard>"
         "$<$<CONFIG:Debug>:${SDK_ROOT}/components/libraries/mpu>"
         "$<$<CONFIG:Debug>:${SDK_ROOT}/external/segger_rtt>"
-#        "${SDK_ROOT}/components/libraries/cli"
         "${SDK_ROOT}/modules/nrfx/mdk"
         "${SDK_ROOT}/components/libraries/bootloader"
         "${SDK_ROOT}/components/libraries/bootloader/dfu"
@@ -226,7 +228,6 @@ target_include_directories("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/components/libraries/balloc"
         "${SDK_ROOT}/components/libraries/ringbuf"
         "${SDK_ROOT}/components/libraries/hardfault/nrf52"
-#        "${SDK_ROOT}/components/libraries/cli/uart"
         "${SDK_ROOT}/components/libraries/hardfault"
         "${SDK_ROOT}/components/libraries/svc"
         "${SDK_ROOT}/components/libraries/uart"
@@ -273,3 +274,19 @@ target_link_options("${PROJECT_NAME}" PRIVATE
         # Generate memory map
         "-Wl,-Map=${PROJECT_NAME}.map"
         )
+
+get_target_property(ext "${PROJECT_NAME}" SUFFIX)
+
+add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD
+        COMMAND "${CMAKE_OBJCOPY}" -O binary "${PROJECT_NAME}${ext}" "${PROJECT_NAME}.bin"
+        COMMAND "${CMAKE_OBJCOPY}" -O ihex "${PROJECT_NAME}${ext}" "${PROJECT_NAME}.hex"
+        BYPRODUCTS ${PROJECT_NAME}.hex ${PROJECT_NAME}.bin
+        )
+
+if (EXISTS ${SIZE_FUNC})
+    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD
+            COMMAND "${SIZE_FUNC}" "${PROJECT_NAME}${ext}"
+            )
+endif ()
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY ADDITIONAL_CLEAN_FILES ${PROJECT_NAME}.map)
