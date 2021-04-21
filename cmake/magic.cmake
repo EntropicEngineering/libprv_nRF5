@@ -32,9 +32,14 @@ if (NOT EXISTS "${SDK_ROOT}")
     file(GLOB _SDK_ROOT CONFIGURE_DEPENDS
             "${CMAKE_CURRENT_SOURCE_DIR}/external/nRF5_SDK*"
             "${CMAKE_CURRENT_SOURCE_DIR}/external/nRF5SDK*"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../external/nRF5_SDK*"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../external/nRF5SDK*"
             )
     if (EXISTS "${_SDK_ROOT}")
-        get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
+        message("${_SDK_ROOT}")
+#        get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
+        set(SDK_ROOT ${_SDK_ROOT})
+        message("${SDK_ROOT}")
     endif ()
 endif ()
 
