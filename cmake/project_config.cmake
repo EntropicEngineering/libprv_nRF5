@@ -66,9 +66,7 @@ if(DEFINED ENABLE_BOOTLOADER)
     target_compile_definitions("${PROJECT_NAME}" PRIVATE ENABLE_BOOTLOADER=${ENABLE_BOOTLOADER})
 endif()
 
-#get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
-set(LIB_ROOT "${CMAKE_MODULE_PATH}/..")
-message("LIB_ROOT is ${LIB_ROOT}")
+get_filename_component(LIB_ROOT "${CMAKE_MODULE_PATH}/.." ABSOLUTE CACHE)
 
 target_sources("${PROJECT_NAME}" PRIVATE
         "${SDK_ROOT}/modules/nrfx/mdk/gcc_startup_nrf52840.S"

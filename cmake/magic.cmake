@@ -36,10 +36,7 @@ if (NOT EXISTS "${SDK_ROOT}")
             "${CMAKE_CURRENT_SOURCE_DIR}/../external/nRF5SDK*"
             )
     if (EXISTS "${_SDK_ROOT}")
-        message("${_SDK_ROOT}")
-#        get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
-        set(SDK_ROOT ${_SDK_ROOT})
-        message("${SDK_ROOT}")
+        get_filename_component(SDK_ROOT "${_SDK_ROOT}" ABSOLUTE CACHE)
     endif ()
 endif ()
 
